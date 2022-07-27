@@ -18,7 +18,6 @@ public class UserDAO implements IUserDAO {
     Statement stmt;
 
 
-
     private static final String INSERT_USERS_SQL = "INSERT INTO user (username,password,name,phone,email,role) VALUES ( ? , ? , ? , ? , ? , ? );";
     private static final String SELECT_USER_BY_ID = "select * from user where iduser = ?;";
     private static final String SELECT_ALL_USERS = "select * from user;";
@@ -27,9 +26,9 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_USER_BY_EMAIL = "select u.id,u.name,u.email, u.idcountry\r\n"
             + "    		 from users as u inner join country as c\r\n"
             + "    		where u.email = ? and u.idcountry = c.id;";
-    public static String SEARCH_BY_KEY = "" +
-            "SELECT * FROM user WHERE iduser LIKE ? OR username LIKE ? OR name LIKE ? OR phone LIKE ? OR email LIKE ?;" ;
+    public static String SEARCH_BY_KEY = "SELECT * FROM user WHERE username LIKE ? OR name LIKE ? OR email LIKE ?";
     private static final String SELECT_USER_BY_NAME = " select * from user where name or username like '% ? % ' ; ";
+    private static final String SELECT_USER_BY_USERNAME =  "select u.iduser,u.username,u.password,u.name,u.phone,u.email,u.role    from user as u inner join role as role where username = ? and u.role = role.id;";
 
     public UserDAO() {
     }
@@ -184,8 +183,6 @@ public class UserDAO implements IUserDAO {
             statement.setString(1, '%' + query + '%');
             statement.setString(2, '%' + query + '%');
             statement.setString(3, '%' + query + '%');
-            statement.setString(4, '%' + query + '%');
-            statement.setString(5, '%' + query + '%');
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("iduser");
@@ -194,12 +191,42 @@ public class UserDAO implements IUserDAO {
                 String phone = rs.getString("phone");
                 String email = rs.getString("email");
                 int role = rs.getInt("role");
-                listUser.add(new User(id, username, name, phone, email,role));
+                listUser.add(new User(id, username, name, phone, email, role));
             }
         } catch (SQLException e) {
             printSQLException(e);
         }
         return listUser;
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        User user = null;
+        // Step 1: Establishing a Connection
+        try (Connection connection = connectionMySQL.getConnection();
+             // Step 2:Create a statement using connection object
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_USERNAME);) {
+            preparedStatement.setString(1, username);
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+
+            // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                int id = rs.getInt("iduser");
+                String username1 = rs.getString("username");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+                String phone = rs.getString("phone");
+//                String address = rs.getString("address");
+                String email = rs.getString("email");
+                int role = rs.getInt("role");
+                user = new User(id, username1, password, name, phone, email, role);
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return user;
     }
 
     private void printSQLException(SQLException ex) {
@@ -217,16 +244,18 @@ public class UserDAO implements IUserDAO {
             }
         }
     }
+
     @Override
-    public List<User> selectUsersPagging(int offset, int noOfRecords) {
-        String query = "select sql_calc_found_rows * from casemd3.user limit " + offset + "," + noOfRecords;
+    public List<User> selectUsersPagging(int offset, int noOfRecords, String name) {
+        String query = "select sql_calc_found_rows * from casemd3.user where name like ? limit " + offset + ", " + noOfRecords;
         List<User> list = new ArrayList<>();
         User user = null;
         try {
             connection = connectionMySQL.getConnection();
-            stmt = connection.createStatement();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, '%' + name + '%');
             System.out.println(this.getClass() + " selectUsersPagging() query: " + query);
-            ResultSet rs = stmt.executeQuery(query);
+            ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 user = new User();
                 user.setId(rs.getInt("iduser"));
@@ -238,18 +267,17 @@ public class UserDAO implements IUserDAO {
                 user.setRole(rs.getInt("role"));
                 list.add(user);
             }
-            rs.close();
+//            rs.close();
 
-            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
+            rs = preparedStatement.executeQuery("SELECT FOUND_ROWS()");
             if (rs.next()) {
                 this.noOfRecords = rs.getInt(1);
             }
+            preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
-                if (stmt != null)
-                    stmt.close();
                 if (connection != null)
                     connection.close();
             } catch (SQLException e) {
@@ -269,7 +297,7 @@ public class UserDAO implements IUserDAO {
         User user = null;
         connection = connectionMySQL.getConnection();
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1,email);
+        ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
@@ -285,13 +313,14 @@ public class UserDAO implements IUserDAO {
         connection.close();
         return null;
     }
+
     public User selectUserByPhone(String phone) throws ClassNotFoundException, SQLException {
         String query = "select *\n" +
                 "from user inner join role where user.phone = ? and user.role = role.id;";
         User user = null;
         connection = connectionMySQL.getConnection();
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1,phone);
+        ps.setString(1, phone);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
@@ -307,12 +336,13 @@ public class UserDAO implements IUserDAO {
         connection.close();
         return null;
     }
+
     public User selectUserByUserName(String userName) throws SQLException {
         String query = "select *\n" +
                 "from user inner join role where user.username = ? and user.role = role.id;";
         connection = connectionMySQL.getConnection();
         PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1,userName);
+        ps.setString(1, userName);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {

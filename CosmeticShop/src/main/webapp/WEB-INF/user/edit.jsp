@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 
@@ -43,7 +46,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-flex align-items-center justify-content-between">
-                            <h4 class="mb-0 font-size-18"> Register</h4>
+                            <h4 class="mb-0 font-size-18">Edit</h4>
 
                         </div>
                     </div>
@@ -54,7 +57,7 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">register</h4>
+                                <h4 class="card-title">Edit</h4>
                                 <form class="needs-validation"  method="post" >
                                     <c:if test="${user != null}">
                                         <input type="hidden" name="id" value="${id}" />
@@ -81,7 +84,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="name">You Name</label>
-                                                <input type="text" class="form-control" id="name" name="name" value="name">
+                                                <input type="text" class="form-control" id="name" name="name" value="${name}">
                                                 <div class="invalid-feedback">
                                                     Please provide a valid name.
                                                 </div>
@@ -107,8 +110,13 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="role">Role</label>
-                                                <input type="number" class="form-control" id="role" name="role" value="${role}" >
+                                                <label>Role</label>
+                                                <select class="form-control" name="role">
+                                                    <c:forEach var="role" items="${applicationScope.listRole}">
+                                                        <option value="${role.getId()}">${role.getRole()}</option>
+                                                    </c:forEach>
+                                                </select>
+<%--                                                <input type="number" class="form-control" id="role" name="role" value="${role}" >--%>
                                                 <div class="invalid-feedback">
                                                     Please provide a valid role.
                                                 </div>
@@ -128,7 +136,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary" type="submit" value="save">Submit</button>
+                                    <button class="btn btn-primary" type="submit" value="save">Edit</button>
+                                    <div>
+                                        ${errors}
+                                    </div>
                                 </form>
                             </div>
                         </div>

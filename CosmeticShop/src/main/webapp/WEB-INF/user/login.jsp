@@ -22,7 +22,7 @@
 
 <body>
 <div class="home-btn d-none d-sm-block">
-  <a href="index.html" class="text-dark"><i class="fas fa-home h2"></i></a>
+  <a href="../../index.html" class="text-dark"><i class="fas fa-home h2"></i></a>
 </div>
 <div class="account-pages my-5 pt-sm-5">
   <div class="container">
@@ -44,7 +44,7 @@
           </div>
           <div class="card-body pt-0">
             <div>
-              <a href="index.html">
+              <a href="../../index.html">
                 <div class="avatar-md profile-user-wid mb-4">
                                             <span class="avatar-title rounded-circle bg-light">
                                                 <img src="assets\images\logo.svg" alt="" class="rounded-circle" height="34">
@@ -53,16 +53,16 @@
               </a>
             </div>
             <div class="p-2">
-              <form class="form-horizontal" action="index.html">
+              <form class="form-horizontal" action="/user" method="post" name="userLogin">
 
                 <div class="form-group">
                   <label for="username">Username</label>
-                  <input type="text" class="form-control" id="username" placeholder="Enter username">
+                  <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
                 </div>
 
                 <div class="form-group">
                   <label for="userpassword">Password</label>
-                  <input type="password" class="form-control" id="userpassword" placeholder="Enter password">
+                  <input type="password" class="form-control" id="userpassword" name="password" placeholder="Enter password">
                 </div>
 
                 <div class="custom-control custom-checkbox">

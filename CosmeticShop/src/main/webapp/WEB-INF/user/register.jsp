@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 
@@ -105,8 +108,13 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="role">Role</label>
-                                                <input type="number" class="form-control" id="role" name="role" placeholder="input 1 for admin,2 for user" value="${user.getRole()}" required>
+                                                <label>Role</label>
+<%--                                                <input type="number" class="form-control" id="role" name="role" placeholder="input 1 for admin,2 for user" value="${user.getRole()}" required>--%>
+                                                <select class="form-control" name="role">
+                                                    <c:forEach var="role" items="${applicationScope.listRole}">
+                                                        <option value="${role.getId()}">${role.getRole()}</option>
+                                                    </c:forEach>
+                                                </select>
                                                 <div class="invalid-feedback">
                                                     Please provide a valid role.
                                                 </div>

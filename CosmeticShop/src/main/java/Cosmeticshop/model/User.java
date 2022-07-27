@@ -1,5 +1,9 @@
 package Cosmeticshop.model;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 public class User {
     private int id;
     private String username;
@@ -107,6 +111,8 @@ public class User {
         this.id = id;
     }
 
+    @NotEmpty(message = "Tên không được để trống")
+    @Pattern(regexp = "^([A-Z]+[a-z]*[ ]?)+$", message = "Bắt đầu bằng 1 chữ cái In hoa")
     public String getUsername() {
         return username;
     }
@@ -114,7 +120,7 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-
+@NotEmpty
     public String getPassword() {
         return password;
     }
@@ -123,6 +129,8 @@ public class User {
         this.password = password;
     }
 
+@NotEmpty
+@Pattern(regexp = "^([A-Z]+[a-z]{1,})\\s([A-Z]+[a-z]*[ ]?)+$")
     public String getName() {
         return name;
     }
@@ -131,6 +139,9 @@ public class User {
         this.name = name;
     }
 
+    @NotEmpty
+    @Email(message = "Định dạng không đúng")
+    @Pattern(regexp = "^([a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)$", message = "Format mail not right")
     public String getEmail() {
         return email;
     }
@@ -139,6 +150,8 @@ public class User {
         this.email = email;
     }
 
+    @NotEmpty
+    @Pattern(regexp = "((84|0[1|2|3|4|5|6|7|8|9])+([0-9]{8})\\b)", message = "Số điện thoại phải bắt đầu từ số 0 và có 10 chữ số !!!")
     public String getPhone() {
         return phone;
     }

@@ -105,7 +105,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="image">Image</label>
-                                                <input type="file" class="form-control" id="image" name="file" required>
+                                                <input type="file" class="form-control" id="image" name="file" accept="image/png, image/jpeg" required>
                                                 <div class="invalid-feedback">
                                                     Please provide a valid image.
                                                 </div>

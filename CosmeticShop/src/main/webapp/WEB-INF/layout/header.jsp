@@ -28,66 +28,66 @@
 
             <!-- App Search-->
             <form class="app-search d-none d-lg-block" method="post">
-                <div class="position-relative">
-                    <input type="text" class="form-control" name="search" placeholder="Search...">
+                <div class="position-relative col-lg-12 d-flex">
+                    <input type="text" class="form-control col-lg-8" name="search" value="${requestScope.search}" placeholder="Search...">
                     <span class="bx bx-search-alt"></span>
-                    <button type="submit" name="search">Search</button>
+                    <button class="col-lg-4 btn btn-secondary" type="submit" name="search">Search</button>
                 </div>
             </form>
 
-            <div class="dropdown dropdown-mega d-none d-lg-block ml-2">
-                <button type="button" class="btn header-item waves-effect" data-toggle="dropdown" aria-haspopup="false"
-                        aria-expanded="false">
-                    Mega Menu
-                    <i class="mdi mdi-chevron-down"></i>
-                </button>
-                <div class="dropdown-menu dropdown-megamenu">
-                    <div class="row">
-                        <div class="col-sm-8">
+<%--            <div class="dropdown dropdown-mega d-none d-lg-block ml-2">--%>
+<%--                <button type="button" class="btn header-item waves-effect" data-toggle="dropdown" aria-haspopup="false"--%>
+<%--                        aria-expanded="false">--%>
+<%--                    Mega Menu--%>
+<%--                    <i class="mdi mdi-chevron-down"></i>--%>
+<%--                </button>--%>
+<%--                <div class="dropdown-menu dropdown-megamenu">--%>
+<%--                    <div class="row">--%>
+<%--                        <div class="col-sm-8">--%>
 
 
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h5 class="font-size-14 mt-0">UI Components</h5>
-                                    <ul class="list-unstyled megamenu-list">
-                                        <li>
-                                            <a href="javascript:void(0);">Lightbox</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);">Range Slider</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);">Sweet Alert</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);">Rating</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);">Forms</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);">Tables</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);">Charts</a>
-                                        </li>
-                                    </ul>
-                                </div>
+<%--                        </div>--%>
+<%--                        <div class="col-sm-4">--%>
+<%--                            <div class="row">--%>
+<%--                                <div class="col-sm-6">--%>
+<%--                                    <h5 class="font-size-14 mt-0">UI Components</h5>--%>
+<%--                                    <ul class="list-unstyled megamenu-list">--%>
+<%--                                        <li>--%>
+<%--                                            <a href="javascript:void(0);">Lightbox</a>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <a href="javascript:void(0);">Range Slider</a>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <a href="javascript:void(0);">Sweet Alert</a>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <a href="javascript:void(0);">Rating</a>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <a href="javascript:void(0);">Forms</a>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <a href="javascript:void(0);">Tables</a>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <a href="javascript:void(0);">Charts</a>--%>
+<%--                                        </li>--%>
+<%--                                    </ul>--%>
+<%--                                </div>--%>
 
-                                <div class="col-sm-5">
-                                    <div>
-                                        <img src="assets\images\megamenu-img.png" alt=""
-                                             class="img-fluid mx-auto d-block">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<%--                                <div class="col-sm-5">--%>
+<%--                                    <div>--%>
+<%--                                        <img src="assets\images\megamenu-img.png" alt=""--%>
+<%--                                             class="img-fluid mx-auto d-block">--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
 
-                </div>
-            </div>
+<%--                </div>--%>
+<%--            </div>--%>
         </div>
 
         <div class="d-flex">

@@ -3,8 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="en">
-
-<
 <head>
 
     <meta charset="utf-8">
@@ -33,7 +31,6 @@
     <link href="assets\css\app.min.css" id="app-style" rel="stylesheet" type="text/css">
 
 </head>
->
 <body data-sidebar="dark">
 
 <!-- Begin page -->
@@ -82,7 +79,7 @@
                                         <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <%--                                            <th>UserName</th>--%>
+                                            <th>UserName</th>
                                             <%--                                            <th>Password</th>--%>
                                             <th>Name</th>
                                             <th>Phone</th>
@@ -95,15 +92,19 @@
                                         <c:forEach items="${requestScope.listUser}" var="user">
                                             <tr>
                                                 <th>${user.getId()}</th>
-                                                    <%--                                                <th><c:out value="${user.getUsername()}"/></th>--%>
+                                                <th>${user.getUsername()}</th>
                                                     <%--                                                <th><c:out value="${user.getPassword()}"/></th>--%>
-                                                <th><c:out value="${user.getName()}"/></th>
-                                                <th><c:out value="${user.getPhone()}"/></th>
-                                                <th><c:out value="${user.getEmail()}"/></th>
-                                                <th><c:out value="${user.getRole()}"/></th>
+                                                <th>${user.getName()}</th>
+                                                <th>${user.getPhone()}</th>
+                                                <th>${user.getEmail()}</th>
+                                                    <c:forEach var="role" items="${listRole}">
+                                                        <c:if test="${user.getRole() == role.getId()}" >
+                                                            <th>${role.getRole()}</th>
+                                                        </c:if>
+                                                    </c:forEach>
                                                 <th>
                                                     <a href="/user?action=edit&id=${user.getId()}">Edit</a>
-                                                    <a href="/user?action=delete&id=${user.getId()}">Delete</a>
+                                                    <a href="#" onclick="del(${user.getId()})">Delete</a>
                                                 </th>
                                             </tr>
                                         </c:forEach>
@@ -111,30 +112,30 @@
 
 
                                     </table>
-<%--                                    <p><a href="/user?action=p">Page</a></p>--%>
+                                    <%--                                    <p><a href="/user?action=p">Page</a></p>--%>
                                     <nav aria-label="Page navigation example">
                                         <ul class="pagination">
 
                                             <c:if test="${requestScope.currentPage != 1}">
                                                 <li class="page-item"><a class="page-link"
-                                                                         href="/user?page=${requestScope.currentPage - 1}">Previous</a>
+                                                                         href="/user?page=${requestScope.currentPage - 1}&search=${requestScope.search}">Previous</a>
                                                 </li>
                                             </c:if>
                                             <c:forEach begin="1" end="${noOfPages}" var="i">
                                                 <c:choose>
                                                     <c:when test="${requestScope.currentPage eq i}">
-                                                        <li class="page-item"><a class="page-link"
-                                                                                 href="/user?page=${i}">${i}</a></li>
+                                                        <li class="page-item page-link">${i}</li>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <li class="page-item"><a class="page-link"
-                                                                                 href="/user?page=${i}">${i}</a></li>
+                                                                                 href="/user?page=${i}&search=${requestScope.search}">${i}</a>
+                                                        </li>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </c:forEach>
                                             <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
                                                 <li class="page-item"><a class="page-link"
-                                                                         href="/user?page=${requestScope.currentPage + 1}">Next</a>
+                                                                         href="/user?page=${requestScope.currentPage + 1}&search=${requestScope.search}">Next</a>
                                                 </li>
                                             </c:if>
                                         </ul>
@@ -199,6 +200,14 @@
 <script src="assets\js\pages\table-editable.int.js"></script>
 
 <script src="assets\js\app.js"></script>
+
+<script>
+    function del(id) {
+        if(confirm("Do you want to delete it?") == true) {
+            window.location.href = "/user?action=delete&id=" +id;
+        }
+    }
+</script>
 
 </body>
 </html>

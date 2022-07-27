@@ -13,12 +13,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.io.File;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.BiConsumer;
 
 @WebServlet(urlPatterns = "/product")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
@@ -204,17 +214,14 @@ public class ProductSeverlet extends HttpServlet {
             throws SQLException, IOException, ServletException {
         System.out.println("id");
         int id = Integer.parseInt(request.getParameter("id"));
-        System.out.println("testid");
         String name = request.getParameter("name");
         double price = Double.parseDouble(request.getParameter("price"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         Timestamp updateDate = Timestamp.valueOf(LocalDateTime.now());
-        System.out.println("testall");
         String image = null;
         for (Part part : request.getParts()) {
             if (part.getName().equals("file")) {
                 String fileName = extractFileName(part);
-                // refines the fileName in case it is an absolute path
                 fileName = new File(fileName).getName();
                 if (fileName.equals("")) {
                     image = "\\assets\\images\\maintenance.png";
@@ -232,6 +239,9 @@ public class ProductSeverlet extends HttpServlet {
         productDAO.updateProduct(book);
 //        response.sendRedirect("/WEB-INF/product/update.jsp/");
         response.sendRedirect("/product");
+
+
+
     }
 
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response)
@@ -269,4 +279,5 @@ public class ProductSeverlet extends HttpServlet {
         requestDispatcher.forward(req, resp);
 
     }
+
 }

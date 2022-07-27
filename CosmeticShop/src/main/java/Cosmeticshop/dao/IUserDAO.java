@@ -11,7 +11,7 @@ public interface IUserDAO {
     public User selectUser(int id);
 
     public List<User> selectAllUsers();
-    public List<User> selectUsersPagging(int offset,int noOfRecords);
+    public List<User> selectUsersPagging(int offset,int noOfRecords, String search);
     boolean existByUsername(String username);
     boolean existByUserId(long userId);
     boolean existByRoles(String Roles);
@@ -20,5 +20,6 @@ public interface IUserDAO {
 
     public boolean updateUser(User user) throws SQLException;
    List<User> findNameUser(String query) throws SQLException;
+    User getUserByUsername(String username);
 
 }

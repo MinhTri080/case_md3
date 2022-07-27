@@ -179,7 +179,7 @@ public class ProductDAO implements IProductDAO {
         Connection connection = connectionMySQL.getConnection();
         System.out.println("numberpage");
 
-        String query = "SELECT SQL_CALC_FOUND_ROWS * FROM product where name LIKE ? OR price LIKE ? OR quantity LIKE ? limit " + offset + "," + noOfRecords;
+        String query = "SELECT SQL_CALC_FOUND_ROWS * FROM product where name LIKE ? OR price LIKE ? OR quantity LIKE ? order by createdate desc limit " + offset + ", " + noOfRecords;
         List<Product> list = new ArrayList<>();
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, '%' + name + '%');

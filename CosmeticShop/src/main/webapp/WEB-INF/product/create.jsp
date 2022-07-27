@@ -54,7 +54,7 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">update</h4>
+                                <h4 class="card-title">create</h4>
                                 <form class="needs-validation"  method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -105,7 +105,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="image">image</label>
-                                                <input type="file" class="form-control" id="image" name="file" required>
+                                                <input type="file" class="form-control" id="image" name="file" accept="image/png, image/jpeg" required>
                                                 <div class="invalid-feedback">
                                                     Please provide a valid role.
                                                 </div>
