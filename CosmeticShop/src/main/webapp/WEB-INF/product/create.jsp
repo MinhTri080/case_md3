@@ -43,7 +43,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-flex align-items-center justify-content-between">
-                            <h4 class="mb-0 font-size-18"> Update</h4>
+                            <h4 class="mb-0 font-size-18"> Create</h4>
 
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="name"> Name Product</label>
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="productname"  required>
+                                                <input type="text" value="${name}" class="form-control" id="name" name="name" placeholder="productname"  required>
                                                 <div class="valid-feedback">
                                                 </div>
                                             </div>
@@ -87,7 +87,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="price">Price</label>
-                                                <input type="number" class="form-control" id="price" name="price" placeholder="Input product price"  required>
+                                                <input type="number" value="${price}" class="form-control" id="price" name="price" placeholder="Input product price"  required>
                                                 <div class="invalid-feedback">
                                                     Please provide a valid Price.
                                                 </div>
@@ -96,7 +96,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="quantity">Quantity</label>
-                                                <input type="number" class="form-control" id="quantity" name="quantity"   required>
+                                                <input type="number" value="${quantity}" class="form-control" id="quantity" name="quantity"   required>
                                                 <div class="invalid-feedback">
                                                     Please provide a valid quantity.
                                                 </div>
@@ -125,6 +125,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div>${message}</div>
                                     <button class="btn btn-primary" type="submit" value="save">Submit</button>
                                 </form>
                             </div>

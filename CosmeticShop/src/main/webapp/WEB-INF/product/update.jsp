@@ -87,7 +87,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="price">Price</label>
-                                                <input type="number" class="form-control" id="price" name="price"value="${price}}" required>
+                                                <input type="number" class="form-control" id="price" name="price" value="${price}" required>
                                                 <div class="invalid-feedback">
                                                     Please provide a valid Price.
                                                 </div>
@@ -125,6 +125,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div>${message}</div>
                                     <button class="btn btn-primary" type="submit" value="save">Submit</button>
                                 </form>
                             </div>

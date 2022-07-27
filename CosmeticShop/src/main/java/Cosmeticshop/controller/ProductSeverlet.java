@@ -153,10 +153,9 @@ public class ProductSeverlet extends HttpServlet {
 
     private void insertProductr(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
+
         String name = request.getParameter("name");
         double price = Double.parseDouble(request.getParameter("price"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-
         String image = null;
         for (Part part : request.getParts()) {
             if (part.getName().equals("file")) {
@@ -174,18 +173,27 @@ public class ProductSeverlet extends HttpServlet {
                 }
             }
         }
-//        String email = request.getParameter("email");
-//        int role = Integer.parseInt(request.getParameter("role"));
-        Product newProduct = new Product(name, price, quantity, image);
-        productDAO.insertProduct(newProduct);
-        RequestDispatcher rq = request.getRequestDispatcher("/WEB-INF/product/create.jsp");
-        rq.forward(request, response);
-
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        if
+        (price > 0 && quantity > 0) {
+            Product newProduct = new Product(name, price, quantity, image);
+            productDAO.insertProduct(newProduct);
+            RequestDispatcher rq = request.getRequestDispatcher("/WEB-INF/product/create.jsp");
+            rq.forward(request, response);
+        }else {
+            request.setAttribute("message" , "Price or Quantity > 0");
+           request.setAttribute("name",name);
+           request.setAttribute("price",price);
+           request.setAttribute("quantity",quantity);
+            RequestDispatcher rq = request.getRequestDispatcher("/WEB-INF/product/create.jsp");
+            rq.forward(request, response);
+        }
     }
 
     private void showNewProduct(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-//        User user = new User();
-        List<Product> product = productDAO.selectAllProduct();
+//        List<Product> product = productDAO.selectAllProduct();
+//        request.setAttribute("product", product);
+        Product product = new Product();
         request.setAttribute("product", product);
         RequestDispatcher rq = request.getRequestDispatcher("/WEB-INF/product/create.jsp");
         rq.forward(request, response);
@@ -236,10 +244,23 @@ public class ProductSeverlet extends HttpServlet {
             System.out.println("testfileimage");
         }
         Product book = new Product(id, name, price, quantity, image, updateDate);
-        productDAO.updateProduct(book);
+        if
+        (price > 0 && quantity > 0) {
+            productDAO.updateProduct(book);
+            RequestDispatcher rq = request.getRequestDispatcher("/WEB-INF/product/update.jsp");
+            rq.forward(request, response);
+//            response.sendRedirect("/product");
+        }else {
+            request.setAttribute("message" , "Price or Quantity > 0");
+            request.setAttribute("name",name);
+            request.setAttribute("price",price);
+            request.setAttribute("quantity",quantity);
+            RequestDispatcher rq = request.getRequestDispatcher("/WEB-INF/product/update.jsp");
+            rq.forward(request, response);
+        }
+//        productDAO.updateProduct(book);
 //        response.sendRedirect("/WEB-INF/product/update.jsp/");
         response.sendRedirect("/product");
-
 
 
     }
@@ -254,13 +275,15 @@ public class ProductSeverlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/product?action=list");
         dispatcher.forward(request, response);
     }
+
     private void listNumberPage(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ClassNotFoundException, ServletException, IOException {
         System.out.println("numberPage");
         int page = 1;
         int recordsPerPage = 5;
         if (req.getParameter("page") != null) {
             page = Integer.parseInt(req.getParameter("page"));
-        };
+        }
+        ;
         String name = "";
         if (req.getParameter("search") != null) {
             name = req.getParameter("search");
@@ -271,8 +294,7 @@ public class ProductSeverlet extends HttpServlet {
         req.setAttribute("productList", productList);
         req.setAttribute("noOfPages", noOfPages);
         req.setAttribute("currentPage", page);
-        req.setAttribute("search" , name);
-
+        req.setAttribute("search", name);
 
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/product/list.jsp");
